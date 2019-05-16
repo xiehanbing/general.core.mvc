@@ -1,4 +1,6 @@
-﻿using General.Framework.Filters;
+﻿using General.Core;
+using General.Framework.Filters;
+using General.Framework.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace General.Framework.Controllers.Admin
@@ -9,5 +11,14 @@ namespace General.Framework.Controllers.Admin
     [AdminAuthFilter]
     public class PublicAdminController : AdminAreaController
     {
+        private readonly IWorkContext _workContext;
+
+        public PublicAdminController()
+        {
+
+            _workContext = EngineContext.CurrentEngin.Resolve<IWorkContext>();
+        }
+
+        public IWorkContext WorkContext => _workContext;
     }
 }

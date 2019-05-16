@@ -2,6 +2,6 @@
 {
     public interface IAuthenticationService
     {
-        
+        Entity.User.SysUser GetCurrentUser();
     }
 }

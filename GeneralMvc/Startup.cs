@@ -8,6 +8,8 @@ using General.Core.Data;
 using General.Core.Extension;
 using General.Core.Librs;
 using General.Entity;
+using General.Framework.Infrastructure;
+using General.Framework.Security.Admin;
 using General.Mvc;
 using General.Services.Category;
 using Microsoft.AspNetCore.Builder;
@@ -59,6 +61,10 @@ namespace GeneralMvc
             //泛型注入到di
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             //services.BuildServiceProvider().GetService<ICategoryService>();
+
+
+            services.AddScoped<IWorkContext, WorkContext>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
             //创建引擎单例
             EngineContext.Initialize(new GeneralEngine(services.BuildServiceProvider()));
         }

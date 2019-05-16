@@ -9,5 +9,7 @@ namespace General.Entity
 
         }
         public DbSet<Category.Category> Categories { get; set; }
+
+        public DbSet<User.SysUser> Users { get; set; }
     }
 }

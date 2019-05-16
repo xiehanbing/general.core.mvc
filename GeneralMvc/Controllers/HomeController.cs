@@ -5,13 +5,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using General.Core;
 using General.Entity;
+using General.Framework.Controllers;
 using General.Services.Category;
 using Microsoft.AspNetCore.Mvc;
 using GeneralMvc.Models;
 
 namespace General.Mvc.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private ICategoryService _categoryService;
         public HomeController(ICategoryService categoryService)
@@ -22,7 +23,7 @@ namespace General.Mvc.Controllers
         {
             //_categoryService = EngineContext.CurrentEngin.Resolve<ICategoryService>();
             //var list = _categoryService.GetAll();
-            var list = _categoryService.GetAll();
+            //var list = _categoryService.GetAll();
             return View();
         }
 

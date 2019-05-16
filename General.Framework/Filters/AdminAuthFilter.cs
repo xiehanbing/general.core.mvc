@@ -11,12 +11,12 @@ namespace General.Framework.Filters
     {
         public void OnResourceExecuting(ResourceExecutingContext context)
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
 
         public void OnResourceExecuted(ResourceExecutedContext context)
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
     }
 }

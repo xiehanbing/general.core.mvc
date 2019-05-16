@@ -10,8 +10,10 @@ namespace General.Mvc.Areas.Admin.Controllers
     /// <summary>
     /// 后台管理登录器
     /// </summary>
+    [Route("admin/login")]
     public class LoginController : AdminAreaController
     {
+        [Route("",Name = "adminlogin")]
         public IActionResult Index()
         {
             return View();
