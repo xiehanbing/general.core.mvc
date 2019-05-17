@@ -13,8 +13,9 @@ namespace General.Framework.Security.Admin
         {
             return new SysUser()
             {
-                Id=Guid.NewGuid(),
-                LoginName = "xiehanbing",
+                Id = 1,
+                UserGuid= Guid.NewGuid(),
+                Account = "xiehanbing",
                 Name = "谢汉冰",
                 Password = "123456"
             };
