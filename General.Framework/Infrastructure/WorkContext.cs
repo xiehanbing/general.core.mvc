@@ -5,10 +5,12 @@ namespace General.Framework.Infrastructure
 {
     public class WorkContext:IWorkContext
     {
-        private IAuthenticationService _authenticationService;
-        public WorkContext(IAuthenticationService authenticationService)
+        private IAdminAuthService _authenticationService;
+        public WorkContext(IAdminAuthService authenticationService)
         {
             _authenticationService = authenticationService;
+
+
         }
         public SysUser CurrentUser
         {

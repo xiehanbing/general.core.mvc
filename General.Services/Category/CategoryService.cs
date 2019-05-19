@@ -17,5 +17,18 @@ namespace General.Services.Category
         {
             return _caRepository.Table.ToList();
         }
+
+        public void InitCategory(List<Entity.Category.Category> list)
+        {
+            var oldList = _caRepository.Table.ToList();
+            oldList.ForEach(del =>
+            {
+                var item = list.FirstOrDefault(o => o.SysResource == del.SysResource);
+                if (item != null)
+                {
+                    var permissionList=del.sy
+                }
+            });
+        }
     }
 }

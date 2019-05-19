@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -38,7 +39,7 @@ namespace GeneralMvc
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
+                options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -47,11 +48,21 @@ namespace GeneralMvc
 
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddAuthentication("General").AddCookie(o =>
+            services.AddAuthentication(o =>
             {
-                o.LoginPath = "/Admin/Login/Index";
+                o.DefaultAuthenticateScheme = CookieAdminAuthInfo.AdminAuthCookieScheme;
+                
+                o.DefaultChallengeScheme = CookieAdminAuthInfo.AdminAuthCookieScheme;
+                o.DefaultSignInScheme = CookieAdminAuthInfo.AdminAuthCookieScheme;
+                o.DefaultSignOutScheme = CookieAdminAuthInfo.AdminAuthCookieScheme;
+            }).AddCookie(CookieAdminAuthInfo.AdminAuthCookieScheme, o =>
+            {
+                o.LoginPath = "/Admin/Login";
             });
-
+            //services.AddAuthentication("General").AddCookie(o =>
+            //{
+            //    o.LoginPath = "/Admin/Login";
+            //});
             //一个域创建一个
             //services.AddScoped<ICategoryService, CategoryService>();
 
@@ -62,11 +73,16 @@ namespace GeneralMvc
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             //services.BuildServiceProvider().GetService<ICategoryService>();
 
-
+            services.AddScoped<IAdminAuthService, AdminAuthService>();
             services.AddScoped<IWorkContext, WorkContext>();
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
+           
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //创建引擎单例
             EngineContext.Initialize(new GeneralEngine(services.BuildServiceProvider()));
+
+            services.AddSingleton<IMemoryCache, MemoryCache>();
+
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -87,6 +103,7 @@ namespace GeneralMvc
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

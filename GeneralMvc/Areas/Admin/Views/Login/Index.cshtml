@@ -2,6 +2,7 @@
 @{
     Layout = null;
 }
+@model General.Entity.User.LoginModel
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -65,18 +66,21 @@
 
                                         <div class="space-6"></div>
 
-                                        <form>
+                                        <form asp-route="admin/login" method="post">
+                                            <input type="hidden" id="range" name="Range" value="@Model.Range" />
                                             <fieldset>
                                                 <label class="block clearfix">
                                                     <span class="block input-icon input-icon-right">
-                                                        <input type="text" class="form-control" placeholder="Username" />
+                                                        @Html.TextBoxFor(m => m.Account, new { @class = "form-control", placeholder = "Account" })
+                                                        @*<input type="text" class="form-control" placeholder="Username"/>*@
                                                         <i class="ace-icon fa fa-user"></i>
                                                     </span>
                                                 </label>
 
                                                 <label class="block clearfix">
                                                     <span class="block input-icon input-icon-right">
-                                                        <input type="password" class="form-control" placeholder="Password" />
+                                                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                                                        @*<input type="password" class="form-control" placeholder="Password"/>*@
                                                         <i class="ace-icon fa fa-lock"></i>
                                                     </span>
                                                 </label>
@@ -89,9 +93,11 @@
                                                         <span class="lbl"> Remember Me</span>
                                                     </label>
 
-                                                    <button type="button" class="width-35 pull-right btn btn-sm btn-primary">
+                                                    <button type="button" class="width-35 pull-right btn btn-sm btn-primary" id="mybutton">
                                                         <i class="ace-icon fa fa-key"></i>
                                                         <span class="bigger-110">Login</span>
+
+
                                                     </button>
                                                 </div>
 
@@ -284,10 +290,11 @@
     <script src="assets/js/jquery-1.11.3.min.js"></script>
     <![endif]-->
     <script type="text/javascript">
-			if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+        if ('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
     </script>
-
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     <!-- inline scripts related to this page -->
+    <script src="~/lib/jquery/jquery.md5.js"></script>
     <script type="text/javascript">
 			jQuery(function($) {
 			 $(document).on('click', '.toolbar a[data-target]', function(e) {
@@ -322,7 +329,38 @@
 				$('#id-company-text').attr('class', 'light-blue');
 
 				e.preventDefault();
-			 });
+                });
+
+			    $('#mybutton').click(function() {
+                    //if ($('form').valid()) {
+                        var account = $('#Account').val();
+                        var password = $('#Password').val();
+                        var range = $('#range').val();
+
+                        $.get("@Url.RouteUrl("getSalt")?account=" + account,
+                            function (salt) {
+                                //alert(salt);
+
+                                var md5password = $.md5(password + salt);
+                               var result= $.md5(md5password + range);
+                                $.post('@Url.RouteUrl("login")',
+                                    { Account: account, Password: result, Range: range },
+                                    function(data) {
+                                        console.log(data);
+                                        if (data.status) {
+                                            alert("登录成功");
+                                            window.location.href = "@Url.Action("index","main")";
+                                        } else {
+                                            alert(data.message);
+                                        }
+                                    });
+                                //if (salt === '') {
+                                //    alert(salt);
+                                //}
+                            });
+                        //$('form').submit();
+                    //}
+			    });
 
 			});
     </script>

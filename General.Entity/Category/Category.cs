@@ -12,6 +12,7 @@ namespace General.Entity.Category
         /// <summary>
         /// id
         /// </summary>
+        [Key]
         public int  Id { get; set; }
         /// <summary>
         /// 菜单名称
