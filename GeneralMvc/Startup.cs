@@ -10,6 +10,7 @@ using General.Core.Librs;
 using General.Entity;
 using General.Framework.Filters;
 using General.Framework.Infrastructure;
+using General.Framework.Menu.Register;
 using General.Framework.Security.Admin;
 using General.Mvc;
 using General.Mvc.MyMiddleware;
@@ -124,6 +125,8 @@ namespace General.Mvc
                     name: "areas",
                     template: "{area:exists}/{controller=Login}/{action=Index}/{id?}");
             });
+            //初始化菜单
+            Core.EngineContext.CurrentEngin.Resolve<IRegisterApplicationService>().InitRegister();
         }
     }
 }
