@@ -8,9 +8,11 @@ using General.Core.Data;
 using General.Core.Extension;
 using General.Core.Librs;
 using General.Entity;
+using General.Framework.Filters;
 using General.Framework.Infrastructure;
 using General.Framework.Security.Admin;
 using General.Mvc;
+using General.Mvc.MyMiddleware;
 using General.Services.Category;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,7 +24,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace GeneralMvc
+namespace General.Mvc
 {
     public class Startup
     {
@@ -43,6 +45,12 @@ namespace GeneralMvc
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            //添加自定义异常
+            services.AddMvc(opt =>
+            {
+                opt.Filters.Add<ExceptionFilter>();
+            });
             //add dbcontext
             services.AddDbContextPool<GeneralDbContext>(options =>
 
@@ -51,7 +59,7 @@ namespace GeneralMvc
             services.AddAuthentication(o =>
             {
                 o.DefaultAuthenticateScheme = CookieAdminAuthInfo.AdminAuthCookieScheme;
-                
+
                 o.DefaultChallengeScheme = CookieAdminAuthInfo.AdminAuthCookieScheme;
                 o.DefaultSignInScheme = CookieAdminAuthInfo.AdminAuthCookieScheme;
                 o.DefaultSignOutScheme = CookieAdminAuthInfo.AdminAuthCookieScheme;
@@ -75,7 +83,7 @@ namespace GeneralMvc
 
             services.AddScoped<IAdminAuthService, AdminAuthService>();
             services.AddScoped<IWorkContext, WorkContext>();
-           
+
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //创建引擎单例
             EngineContext.Initialize(new GeneralEngine(services.BuildServiceProvider()));
@@ -83,11 +91,13 @@ namespace GeneralMvc
             services.AddSingleton<IMemoryCache, MemoryCache>();
 
             services.AddSession();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            //app.UseErrorHandling();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -111,14 +121,9 @@ namespace GeneralMvc
                     template: "{controller=Home}/{action=Index}/{id?}");
 
                 routes.MapRoute(
-                    name: "areas", 
+                    name: "areas",
                     template: "{area:exists}/{controller=Login}/{action=Index}/{id?}");
             });
-
-            //app.UseMvc(routes =>
-            //    {
-            //        routes.MapRoute(name: "areas", template: "{areas:exists}/{controller=Home}/{action=Index}/{id?}");
-            //    });
         }
     }
 }

@@ -79,7 +79,7 @@
 
                                                 <label class="block clearfix">
                                                     <span class="block input-icon input-icon-right">
-                                                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                                                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control", placeholder = "Password",type="password" })
                                                         @*<input type="password" class="form-control" placeholder="Password"/>*@
                                                         <i class="ace-icon fa fa-lock"></i>
                                                     </span>
@@ -338,9 +338,13 @@
                         var range = $('#range').val();
 
                         $.get("@Url.RouteUrl("getSalt")?account=" + account,
-                            function (salt) {
+                            function (saltData) {
+                                if (!saltData.status) {
+                                    alert(saltData.message);
+                                    return;
+                                }
                                 //alert(salt);
-
+                                var salt = saltData.Data;
                                 var md5password = $.md5(password + salt);
                                var result= $.md5(md5password + range);
                                 $.post('@Url.RouteUrl("login")',
