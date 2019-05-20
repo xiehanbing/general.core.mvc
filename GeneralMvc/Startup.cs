@@ -10,6 +10,7 @@ using General.Core.Librs;
 using General.Entity;
 using General.Framework.Filters;
 using General.Framework.Infrastructure;
+using General.Framework.Menu;
 using General.Framework.Menu.Register;
 using General.Framework.Security.Admin;
 using General.Mvc;
@@ -92,6 +93,7 @@ namespace General.Mvc
             services.AddSingleton<IMemoryCache, MemoryCache>();
 
             services.AddSession();
+            //services.AddSingleton<IRegisterApplicationService, RegisterApplicationService>();
 
         }
 
@@ -110,9 +112,9 @@ namespace General.Mvc
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+
             app.UseStaticFiles();
-            app.UseCookiePolicy();
+            //app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseSession();
             app.UseMvc(routes =>
@@ -126,7 +128,7 @@ namespace General.Mvc
                     template: "{area:exists}/{controller=Login}/{action=Index}/{id?}");
             });
             //初始化菜单
-            Core.EngineContext.CurrentEngin.Resolve<IRegisterApplicationService>().InitRegister();
+            Core.EngineContext.CurrentEngin.Resolve<IWorkContext>().InitRegister();
         }
     }
 }

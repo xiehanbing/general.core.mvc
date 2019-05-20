@@ -10,6 +10,7 @@ namespace General.Entity.User
     /// 系统用户表
     /// </summary>
     [Table("SysUser")]
+    [Serializable]
     public class SysUser
     {
         public SysUser()

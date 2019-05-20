@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace General.Entity.Category
@@ -7,8 +9,13 @@ namespace General.Entity.Category
     /// 菜单
     /// </summary>
     [Table("Category")]
+    [Serializable]
     public class Category
     {
+        public Category()
+        {
+            SysPermissions=new HashSet<SysPermission>();
+        }
         /// <summary>
         /// id
         /// </summary>
@@ -63,6 +70,6 @@ namespace General.Entity.Category
         /// 是否禁用
         /// </summary>
         public bool IsDisabled { get; set; }
-
+        public virtual ICollection<SysPermission> SysPermissions { get; set; }
     }
 }

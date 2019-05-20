@@ -5,7 +5,7 @@ using General.Services.Category;
 
 namespace General.Framework.Menu.Register
 {
-    public class RegisterApplicationService:IRegisterApplicationService
+    public class RegisterApplicationService: IRegisterApplicationService
     {
         private ICategoryService _categoryService;
 

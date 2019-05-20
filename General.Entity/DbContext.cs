@@ -1,4 +1,5 @@
-﻿using General.Entity.User;
+﻿using General.Entity.Category;
+using General.Entity.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace General.Entity
@@ -16,5 +17,9 @@ namespace General.Entity
         public DbSet<SysUserToken> SysUserTokens { get; set; }
 
         public DbSet<SysUserLoginLog> SysUserLoginLogs { get; set; }
+
+        public DbSet<SysPermission> SysPermissions { get; set; }
+
+        public DbSet<SysRole> SysRoles { get; set; }
     }
 }

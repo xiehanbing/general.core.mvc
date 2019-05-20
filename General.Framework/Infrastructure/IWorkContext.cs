@@ -9,5 +9,7 @@
         /// 当前登录用户
         /// </summary>
         Entity.User.SysUser CurrentUser { get; }
+
+        void InitRegister();
     }
 }

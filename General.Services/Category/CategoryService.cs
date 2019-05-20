@@ -9,15 +9,20 @@ namespace General.Services.Category
     {
         //private readonly GeneralDbContext _dbContext;
         private IRepository<Entity.Category.Category> _caRepository;
-        public CategoryService(IRepository<Entity.Category.Category> caRepository)
+        private readonly IRepository<Entity.Category.SysPermission> _syspermissionRepository;
+        public CategoryService(IRepository<Entity.Category.Category> caRepository, IRepository<Entity.Category.SysPermission> syspermissionRepository)
         {
             _caRepository = caRepository;
+            _syspermissionRepository = syspermissionRepository;
         }
         public List<Entity.Category.Category> GetAll()
         {
             return _caRepository.Table.ToList();
         }
-
+        /// <summary>
+        /// 保存菜单到数据库
+        /// </summary>
+        /// <param name="list"></param>
         public void InitCategory(List<Entity.Category.Category> list)
         {
             var oldList = _caRepository.Table.ToList();
@@ -27,7 +32,9 @@ namespace General.Services.Category
                 var item = list.FirstOrDefault(o => o.SysResource == del.SysResource);
                 if (item != null)
                 {
-                    //var permissionList=del.sy
+                    var permissionList = del.SysPermissions.ToList();
+                    permissionList.ForEach(delperm => { _syspermissionRepository.Entities.Remove(delperm); });
+                    _caRepository.Entities.Remove(del);
                 }
             });
 
