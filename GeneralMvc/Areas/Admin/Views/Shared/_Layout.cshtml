@@ -20,6 +20,25 @@
     <link rel="stylesheet" href="~/assets/css/ace-skins.min.css" />
     <link rel="stylesheet" href="~/assets/css/ace-rtl.min.css" />
     <script src="~/assets/js/ace-extra.min.js"></script>
+    <!-- basic scripts -->
+    <script src="~/assets/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript">
+        if ('ontouchstart' in document.documentElement) document.write("<script src='~/assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
+    </script>
+    <script src="~/assets/js/bootstrap.min.js"></script>
+
+    <!-- page specific plugin scripts -->
+    <script src="~/assets/js/jquery-ui.custom.min.js"></script>
+    <script src="~/assets/js/jquery.ui.touch-punch.min.js"></script>
+    <script src="~/assets/js/jquery.easypiechart.min.js"></script>
+    <script src="~/assets/js/jquery.sparkline.index.min.js"></script>
+    <script src="~/assets/js/jquery.flot.min.js"></script>
+    <script src="~/assets/js/jquery.flot.pie.min.js"></script>
+    <script src="~/assets/js/jquery.flot.resize.min.js"></script>
+
+    <!-- ace scripts -->
+    <script src="~/assets/js/ace-elements.min.js"></script>
+    <script src="~/assets/js/ace.min.js"></script>
 </head>
 
 <body class="no-skin">
@@ -85,7 +104,21 @@
 
         <div class="main-content">
             <div class="main-content-inner">
+                <div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                    <ul class="breadcrumb">
+                        <li>
+                            <i class="ace-icon fa fa-home home-icon"></i>
+                            <a href="@Url.Action("index","main",new{area="admin"})">首页</a>
+                        </li>
+                        <li class="active" id="showMenuNameTop">系统用户</li>
+                    </ul><!-- /.breadcrumb -->
+
+
+                </div>
                 @RenderBody()
+            
+
+              
             </div>
         </div><!-- /.main-content -->
 
@@ -104,25 +137,7 @@
             <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
         </a>
     </div><!-- /.main-container -->
-    <!-- basic scripts -->
-    <script src="~/assets/js/jquery-2.1.4.min.js"></script>
-    <script type="text/javascript">
-        if ('ontouchstart' in document.documentElement) document.write("<script src='~/assets/js/jquery.mobile.custom.min.js'>" + "<" + "/script>");
-    </script>
-    <script src="~/assets/js/bootstrap.min.js"></script>
 
-    <!-- page specific plugin scripts -->
-    <script src="~/assets/js/jquery-ui.custom.min.js"></script>
-    <script src="~/assets/js/jquery.ui.touch-punch.min.js"></script>
-    <script src="~/assets/js/jquery.easypiechart.min.js"></script>
-    <script src="~/assets/js/jquery.sparkline.index.min.js"></script>
-    <script src="~/assets/js/jquery.flot.min.js"></script>
-    <script src="~/assets/js/jquery.flot.pie.min.js"></script>
-    <script src="~/assets/js/jquery.flot.resize.min.js"></script>
-
-    <!-- ace scripts -->
-    <script src="~/assets/js/ace-elements.min.js"></script>
-    <script src="~/assets/js/ace.min.js"></script>
 
     <!-- inline scripts related to this page -->
     <script type="text/javascript">

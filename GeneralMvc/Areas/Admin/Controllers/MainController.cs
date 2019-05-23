@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace General.Mvc.Areas.Admin.Controllers
 {
+    
     public class MainController : PublicAdminController
     {
         private IAdminAuthService _adminAuthService;

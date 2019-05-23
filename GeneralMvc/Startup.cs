@@ -129,6 +129,8 @@ namespace General.Mvc
             });
             //初始化菜单
             Core.EngineContext.CurrentEngin.Resolve<IWorkContext>().InitRegister();
+
+            //Core.EngineContext.CurrentEngin.Resolve<IRegisterApplicationService>().InitRegister();
         }
     }
 }

@@ -42,7 +42,7 @@ namespace General.Framework.Menu
                         }
                     }
                     //获取action 
-                    var members = type.FindMembers(MemberTypes.Method, BindingFlags.Public, Type.FilterName, "*");
+                    var members = type.FindMembers(MemberTypes.Method, BindingFlags.Public|BindingFlags.Instance, Type.FilterName, "*");
                     if (members != null && EnumerableExtensions.Any(members))
                     {
                         foreach (var m in members)
@@ -65,10 +65,10 @@ namespace General.Framework.Menu
                                         fun.FatherResource = father.SysResource;
                                     }
                                 }
-                                object[] routes = m.GetCustomAttributes(typeof(FunctionAttribute), false);
+                                object[] routes = m.GetCustomAttributes(typeof(RouteAttribute), false);
                                 if (routes != null && EnumerableExtensions.Any(routes))
                                 {
-                                    var route = Enumerable.First(routes) as RouteAttribute;
+                                    var route = routes.First() as RouteAttribute;
                                     fun.RouteName = route.Name;
                                 }
 

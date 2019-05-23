@@ -1,4 +1,7 @@
-﻿namespace General.Framework.Infrastructure
+﻿using System.Collections.Generic;
+using General.Entity.Category;
+
+namespace General.Framework.Infrastructure
 {
     /// <summary>
     /// 
@@ -11,5 +14,8 @@
         Entity.User.SysUser CurrentUser { get; }
 
         void InitRegister();
+
+
+        List<Category> Categories { get; }
     }
 }

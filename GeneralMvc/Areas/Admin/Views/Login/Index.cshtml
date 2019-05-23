@@ -344,7 +344,7 @@
                                     return;
                                 }
                                 //alert(salt);
-                                var salt = saltData.Data;
+                                var salt = saltData.data;
                                 var md5password = $.md5(password + salt);
                                var result= $.md5(md5password + range);
                                 $.post('@Url.RouteUrl("login")',

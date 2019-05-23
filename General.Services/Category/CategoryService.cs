@@ -34,7 +34,7 @@ namespace General.Services.Category
                 {
                     var permissionList = del.SysPermissions.ToList();
                     permissionList.ForEach(delperm => { _syspermissionRepository.Entities.Remove(delperm); });
-                    _caRepository.Entities.Remove(del);
+                    //_caRepository.Entities.Remove(del);
                 }
             });
 

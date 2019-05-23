@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using General.Core.Librs;
 using General.Entity.User;
+using General.Framework;
 using General.Framework.Controllers.Admin;
 using General.Framework.Filters;
 using General.Framework.Security.Admin;
@@ -101,7 +102,13 @@ namespace General.Mvc.Areas.Admin.Controllers
         public IActionResult GetSalt(string account)
         {
             var user = _sysUserService.GetByAccount(account);
-            return Content(user?.Salt);
+
+            return Json(new AjaxResult
+            {
+                Data = user?.Salt,
+                Status = true
+            });
+            //return Content(user?.Salt);
         }
     }
 }
