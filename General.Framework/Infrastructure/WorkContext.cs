@@ -54,25 +54,6 @@ namespace General.Framework.Infrastructure
         /// <summary>
         /// 获取当前用户菜单
         /// </summary>
-        public List<Category> Categories
-        {
-            get
-            {
-                return FunctionManager.GetFunctionLists().Select(item => new Category()
-                {
-                    Name = item.Name,
-                    RouteName = item.RouteName,
-                    Action = item.Action,
-                    Controller = item.Controller,
-                    CssClass = item.CssClass,
-                    FatherId = item.FatherId,
-                    FatherResource = item.FatherResource,
-                    SysResource = item.SysResource,
-                    ResourceId = item.ResourceId,
-                    IsMenu = item.IsMenu,
-                    Sort = item.Sort
-                }).ToList();
-            }
-        }
+        public List<Category> Categories => _authenticationService.GetMyCategories();
     }
 }

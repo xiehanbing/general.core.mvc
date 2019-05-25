@@ -1,23 +1,38 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using General.Core.Data;
 using General.Entity;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace General.Services.Category
 {
     public class CategoryService : ICategoryService
     {
         //private readonly GeneralDbContext _dbContext;
+        private readonly IMemoryCache _memoryCache;
         private IRepository<Entity.Category.Category> _caRepository;
         private readonly IRepository<Entity.Category.SysPermission> _syspermissionRepository;
-        public CategoryService(IRepository<Entity.Category.Category> caRepository, IRepository<Entity.Category.SysPermission> syspermissionRepository)
+        private const string MODEL_KEY = "menu_key";
+        public CategoryService(IRepository<Entity.Category.Category> caRepository,
+            IRepository<Entity.Category.SysPermission> syspermissionRepository,
+            IMemoryCache memoryCache)
         {
             _caRepository = caRepository;
             _syspermissionRepository = syspermissionRepository;
+            _memoryCache = memoryCache;
         }
         public List<Entity.Category.Category> GetAll()
         {
-            return _caRepository.Table.ToList();
+            if (_memoryCache.TryGetValue<List<Entity.Category.Category>>(MODEL_KEY,
+                out List<Entity.Category.Category> list))
+            {
+                return list;
+            }
+
+            var data = _caRepository.Table.ToList();
+            _memoryCache.Set(MODEL_KEY, data,DateTimeOffset.Now.AddHours(1));
+            return data;
         }
         /// <summary>
         /// 保存菜单到数据库
@@ -63,6 +78,12 @@ namespace General.Services.Category
             {
                 _caRepository.DbContext.SaveChanges();
             }
+        }
+
+        public List<Entity.Category.Category> GetByUser(string userId)
+        {
+            return GetAll();
+            //_memoryCache.TryGetValue<List<Entity.Category.Category>>("menu");
         }
     }
 }

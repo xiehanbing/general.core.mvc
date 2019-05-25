@@ -21,5 +21,7 @@ namespace General.Entity
         public DbSet<SysPermission> SysPermissions { get; set; }
 
         public DbSet<SysRole> SysRoles { get; set; }
+
+        public DbSet<SysUserRole> SysUserRoles { get; set; }
     }
 }

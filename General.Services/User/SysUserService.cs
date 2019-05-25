@@ -11,7 +11,7 @@ namespace General.Services.User
     {
         private readonly Core.Data.IRepository<Entity.User.SysUser> _repository;
         private readonly Core.Data.IRepository<Entity.User.SysUserToken> _sysusertokenRepository;
-        private IMemoryCache _memoryCache;
+        private readonly IMemoryCache _memoryCache;
         private const string MODEL_KEY = "General.services.users.{0}";
         private const string MODEL_KEY_TOKEN = "General.services.users.tokens.{0}";
         public SysUserService(Core.Data.IRepository<Entity.User.SysUser> repository, IMemoryCache memoryCache, Core.Data.IRepository<Entity.User.SysUserToken> sysusertokenRepository)

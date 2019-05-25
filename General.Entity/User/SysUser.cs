@@ -15,8 +15,9 @@ namespace General.Entity.User
     {
         public SysUser()
         {
-            SysUserToken=new HashSet<SysUserToken>();
-            SysUserLoginLogs=new HashSet<SysUserLoginLog>();
+            SysUserToken = new HashSet<SysUserToken>();
+            SysUserLoginLogs = new HashSet<SysUserLoginLog>();
+            SysUserRoles=new HashSet<SysUserRole>();
         }
         /// <summary>
         /// 用户名称
@@ -33,11 +34,11 @@ namespace General.Entity.User
         /// <summary>
         /// 邮箱
         /// </summary>
-        public string  Email { get; set; }
+        public string Email { get; set; }
         /// <summary>
         /// 手机号
         /// </summary>
-        public string  MobilePhone { get; set; }
+        public string MobilePhone { get; set; }
         /// <summary>
         /// 密码盐
         /// </summary>
@@ -46,11 +47,11 @@ namespace General.Entity.User
         /// 性别
         /// </summary>
         [Column("Sex")]
-        public string  Sex { get; set; }
+        public string Sex { get; set; }
         /// <summary>
         /// 登录失败次数
         /// </summary>
-        public int  LoginFailedNum { get; set; }
+        public int LoginFailedNum { get; set; }
         /// <summary>
         /// 用户的guid
         /// </summary>
@@ -81,12 +82,20 @@ namespace General.Entity.User
         /// </summary>
         public bool IsDeleted { get; set; }
         /// <summary>
+        /// 是否管理员
+        /// </summary>
+        public bool IsAdmin { get; set; }
+        /// <summary>
         /// 用户token
         /// </summary>
-        public virtual ICollection<SysUserToken>  SysUserToken { get; set; }
+        public virtual ICollection<SysUserToken> SysUserToken { get; set; }
         /// <summary>
         /// 用户登录日志
         /// </summary>
-        public  virtual  ICollection<SysUserLoginLog> SysUserLoginLogs { get; set; }
+        public virtual ICollection<SysUserLoginLog> SysUserLoginLogs { get; set; }
+        /// <summary>
+        /// 用户-角色对应
+        /// </summary>
+        public virtual ICollection<SysUserRole> SysUserRoles { get; set; }
     }
 }

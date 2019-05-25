@@ -41,7 +41,7 @@ namespace General.Framework.Filters
             }
             else
             {
-                RedirectResult redirectResult = new RedirectResult("~/Admin/Login");
+                RedirectToRouteResult redirectResult = new RedirectToRouteResult("adminlogin", new {returnUrl=context.HttpContext.Request.Path});
                 context.Result = redirectResult;
             }
 

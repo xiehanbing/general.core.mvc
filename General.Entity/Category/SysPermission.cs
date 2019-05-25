@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using General.Entity.User;
 
 namespace General.Entity.Category
 {
@@ -24,7 +25,7 @@ namespace General.Entity.Category
         /// <summary>
         /// 角色id
         /// </summary>
-        public int  RoleId { get; set; }
+        public Guid  RoleId { get; set; }
         /// <summary>
         /// 外键 菜单id
         /// </summary>
