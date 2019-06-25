@@ -9,9 +9,11 @@
 
 
   <ItemGroup>
+    <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="RabbitMQ.Client" Version="5.1.0" />
   </ItemGroup>
 
 
@@ -20,6 +22,7 @@
     <ProjectReference Include="..\General.Entity\General.Entity.csproj" />
     <ProjectReference Include="..\General.Framework\General.Framework.csproj" />
     <ProjectReference Include="..\General.Services\General.Services.csproj" />
+    <ProjectReference Include="..\Gneral.RabbitMq\General.RabbitMq.csproj" />
   </ItemGroup>
 
 

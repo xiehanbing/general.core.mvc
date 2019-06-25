@@ -15,7 +15,11 @@ using General.Framework.Menu.Register;
 using General.Framework.Security.Admin;
 using General.Mvc;
 using General.Mvc.MyMiddleware;
+using General.RabbitMq;
+using General.RabbitMq.Config;
+using General.RabbitMq.Listener;
 using General.Services.Category;
+using General.Services.TestRabbitMq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -33,6 +37,8 @@ namespace General.Mvc
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            configuration.LoadAppsetting();
+            //new TestRabbitMqService().Listing();
         }
 
         public IConfiguration Configuration { get; }
@@ -91,8 +97,10 @@ namespace General.Mvc
             EngineContext.Initialize(new GeneralEngine(services.BuildServiceProvider()));
 
             services.AddSingleton<IMemoryCache, MemoryCache>();
-
+            services.AddScoped<IRabbitMqClient, RabbitMqClient>();
             services.AddSession();
+
+            //services.Configure<MqConfigDomMapAppsettiongJson>(Configuration.GetSection("MQ"));
             //services.AddSingleton<IRegisterApplicationService, RegisterApplicationService>();
 
         }
@@ -130,6 +138,7 @@ namespace General.Mvc
             //初始化菜单
             Core.EngineContext.CurrentEngin.Resolve<IWorkContext>().InitRegister();
 
+            //Core.EngineContext.CurrentEngin.Resolve<ITestRabbitMqService>().Listing();
             //Core.EngineContext.CurrentEngin.Resolve<IRegisterApplicationService>().InitRegister();
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using General.Services.TestRabbitMq;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -14,7 +15,11 @@ namespace General.Mvc
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            var build = CreateWebHostBuilder(args).Build();
+            Core.EngineContext.CurrentEngin.Resolve<ITestRabbitMqService>().Listing();
+            build.Run();
+
+
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
